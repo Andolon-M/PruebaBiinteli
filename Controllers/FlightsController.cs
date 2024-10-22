@@ -5,6 +5,7 @@ using System.Text.Json;
 using PruebaBiinteli.Models;
 using PruebaBiinteli.Dtos;
 using PruebaBiinteli.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace PruebaBiinteli.Controllers
 {
@@ -55,42 +56,67 @@ namespace PruebaBiinteli.Controllers
                 {
                     foreach (var flight in flightData)
                     {
-                        // Primero, guarda el transporte
-                        var transport = new Transports
+                        // Verifica si el transporte ya existe
+                        var existingTransport = await _context.Transports
+                            .FirstOrDefaultAsync(t => t.FlightCarrier == flight.FlightCarrier &&
+                                                       t.FlightNumber == flight.FlightNumber);
+
+                        Transports transport;
+                        if (existingTransport != null)
                         {
-                            FlightCarrier = flight.FlightCarrier,
-                            FlightNumber = flight.FlightNumber
-                        };
-
-                        // Guarda el transporte en la base de datos
-                        _context.Transports.Add(transport);
-                        await _context.SaveChangesAsync(); // Guardar los cambios
-
-                        // Luego, guarda el vuelo
-                        var flightModel = new Flights
+                            // Si ya existe, usar el existente
+                            transport = existingTransport;
+                        }
+                        else
                         {
-                            Origin = flight.DepartureStation,
-                            Destination = flight.ArrivalStation,
-                            Price = flight.Price,
-                            FlightNumber = flight.FlightNumber
-                        };
+                            // Si no existe, crear uno nuevo
+                            transport = new Transports
+                            {
+                                FlightCarrier = flight.FlightCarrier,
+                                FlightNumber = flight.FlightNumber
+                            };
+                            // Guarda el nuevo transporte en la base de datos
+                            _context.Transports.Add(transport);
+                            await _context.SaveChangesAsync(); // Guardar los cambios
+                        }
 
-                        // Guarda el vuelo en la base de datos
-                        _context.Flights.Add(flightModel);
+                        // Ahora verifica si el vuelo ya existe
+                        var existingFlight = await _context.Flights
+                            .FirstOrDefaultAsync(f => f.Origin == flight.DepartureStation &&
+                                                       f.Destination == flight.ArrivalStation &&
+                                                       f.Price == flight.Price);
+
+                        if (existingFlight == null)
+                        {
+                            // Si no existe, guardar el nuevo vuelo
+                            var flightModel = new Flights
+                            {
+                                Origin = flight.DepartureStation,
+                                Destination = flight.ArrivalStation,
+                                Price = flight.Price,
+                                FlightNumber = flight.FlightNumber // Asigna la relación con el transporte
+                            };
+
+                            // Guarda el vuelo en la base de datos
+                            _context.Flights.Add(flightModel);
+                        }
                     }
 
-                    await _context.SaveChangesAsync(); // Guardar todos los cambios
+                    // Guardar todos los cambios
+                    await _context.SaveChangesAsync();
                 }
+            
 
-                // Devolver la respuesta procesada (opcionalmente, puedes transformarla antes de devolverla)
-                return Ok(flightData);
-            }
+
+            // Devolver la respuesta procesada (opcionalmente, puedes transformarla antes de devolverla)
+            return Ok(flightData);
+        }
             catch (HttpRequestException ex)
             {
                 // Manejar errores en la solicitud
                 return StatusCode(500, $"Error al realizar la solicitud a la API externa: {ex.Message}");
-            }
-        }
+    }
+}
 
 
     }
