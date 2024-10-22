@@ -31,3 +31,5 @@ d:\Campus\Binteli\PruebaBiinteli\obj\Debug\net8.0\refint\PruebaBiinteli.dll
 d:\Campus\Binteli\PruebaBiinteli\obj\Debug\net8.0\PruebaBiinteli.pdb
 d:\Campus\Binteli\PruebaBiinteli\obj\Debug\net8.0\PruebaBiinteli.genruntimeconfig.cache
 d:\Campus\Binteli\PruebaBiinteli\obj\Debug\net8.0\ref\PruebaBiinteli.dll
+D:\Campus\Binteli\PruebaBiinteli\obj\Debug\net8.0\PruebaBiinteli.sourcelink.json
+D:\Campus\Binteli\PruebaBiinteli\bin\Debug\net8.0\Newtonsoft.Json.dll
