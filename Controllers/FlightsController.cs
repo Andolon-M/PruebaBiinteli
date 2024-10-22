@@ -39,7 +39,7 @@ namespace PruebaBiinteli.Controllers
                 var options = new JsonSerializerOptions
                     {
                         AllowTrailingCommas = true
-                        
+
                     };
 
                 // Procesar el JSON (deserializarlo)
@@ -56,5 +56,8 @@ namespace PruebaBiinteli.Controllers
             }
             
         }
+
+        
+     
     }
 }

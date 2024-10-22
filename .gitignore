@@ -1,0 +1,42 @@
+bin/
+obj/
+
+# Visual Studio
+.vscode/
+*.sln.ide/
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.sln.docstates
+*.sln.ide
+*.DotSettings
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+[xX]64/
+[xX]86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]x/
+[Ll][Oo][Gg]/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# NuGet packages
+*.nupkg
+**/packages/*
+*.snupkg
+*.nuspec
+*.ps1
+
+# Rider
+.idea/
+*.sln.iml
+
+# Visual Studio Code
+.vscode/
+
+# macOS
+.DS_Store
