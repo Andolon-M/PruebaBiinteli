@@ -24,7 +24,9 @@ namespace PruebaBiinteli.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Destination = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Price = table.Column<double>(type: "double", nullable: false)
+                    Price = table.Column<double>(type: "double", nullable: false),
+                    FlightNumber = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {

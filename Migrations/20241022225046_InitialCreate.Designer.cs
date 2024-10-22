@@ -11,7 +11,7 @@ using PruebaBiinteli.Data;
 namespace PruebaBiinteli.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241022221510_InitialCreate")]
+    [Migration("20241022225046_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -33,6 +33,10 @@ namespace PruebaBiinteli.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Destination")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("FlightNumber")
                         .IsRequired()
                         .HasColumnType("longtext");
 

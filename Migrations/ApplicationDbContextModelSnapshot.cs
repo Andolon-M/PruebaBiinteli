@@ -33,6 +33,10 @@ namespace PruebaBiinteli.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("FlightNumber")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Origin")
                         .IsRequired()
                         .HasColumnType("longtext");

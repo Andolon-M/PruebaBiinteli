@@ -71,7 +71,8 @@ namespace PruebaBiinteli.Controllers
                         {
                             Origin = flight.DepartureStation,
                             Destination = flight.ArrivalStation,
-                            Price = flight.Price
+                            Price = flight.Price,
+                            FlightNumber = flight.FlightNumber
                         };
 
                         // Guarda el vuelo en la base de datos
