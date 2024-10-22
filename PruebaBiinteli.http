@@ -1,0 +1,6 @@
+@PruebaBiinteli_HostAddress = http://localhost:5196
+
+GET {{PruebaBiinteli_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
