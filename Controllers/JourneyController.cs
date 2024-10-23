@@ -1,11 +1,7 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PruebaBiinteli.Data;
 using PruebaBiinteli.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PruebaBiinteli.Controllers
 {
@@ -26,6 +22,13 @@ namespace PruebaBiinteli.Controllers
             if (string.IsNullOrEmpty(origen) || string.IsNullOrEmpty(destino))
             {
                 return BadRequest("Los parámetros de origen y destino son requeridos.");
+            }
+
+            // Verificar si la ruta ya existe
+            var routeExist = await RouteExist(origen, destino);
+            if (routeExist.Any()) // Verifica si hay rutas existentes
+            {
+                return Ok(routeExist); // Retorna las rutas existentes
             }
 
             // Obtener vuelos directos
@@ -108,12 +111,13 @@ namespace PruebaBiinteli.Controllers
         }
 
         private async Task SaveJourneysToDatabase(List<FlightRoute> routes)
+
         {
             foreach (var route in routes)
             {
                 // Verificar si ya existe una ruta con los mismos campos
                 var existingJourney = await _context.Journeys
-                    .FirstOrDefaultAsync(j => 
+                    .FirstOrDefaultAsync(j =>
                         j.Origin == route.Origin &&
                         j.Destination == route.Destination &&
                         j.Price == route.TotalPrice);
@@ -138,6 +142,18 @@ namespace PruebaBiinteli.Controllers
 
             await _context.SaveChangesAsync(); // Guardar cambios en la base de datos
         }
+
+        private async Task<List<Journey>> RouteExist(string origen, string destino)
+        {
+            // Verificar si ya existen rutas con los mismos campos
+            var existingJourneys = await _context.Journeys
+                .Where(j => j.Origin == origen && j.Destination == destino)
+                .ToListAsync();
+
+            // Retornar la lista de rutas existentes o una lista vacía
+            return existingJourneys;
+        }
+
     }
 
     public class FlightRoute

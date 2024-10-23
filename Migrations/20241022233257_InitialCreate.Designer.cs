@@ -11,7 +11,7 @@ using PruebaBiinteli.Data;
 namespace PruebaBiinteli.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241022225046_InitialCreate")]
+    [Migration("20241022233257_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
